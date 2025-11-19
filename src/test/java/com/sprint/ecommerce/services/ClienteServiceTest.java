@@ -91,6 +91,8 @@ public class ClienteServiceTest {
             .thenReturn(clienteSalvo);
         when(passwordEncoder.encode("senha123"))
             .thenReturn("senhaCriptografada123");
+        when(usuarioRepository.save(any(Usuario.class)))
+            .thenReturn(usuarioSalvo);
         when(clienteRepository.save(any(Cliente.class)))
             .thenReturn(clienteSalvo);
         when(clienteMapper.clienteToResponse(clienteSalvo))
