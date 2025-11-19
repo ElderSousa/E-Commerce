@@ -7,5 +7,7 @@ public record ClienteResponse(
         String nomeCompleto,
         String cpf,
         LocalDate dataDeNascimento,
-        String telefone
+        String telefone,
+        Long usuarioId,
+        String email
 ) {}

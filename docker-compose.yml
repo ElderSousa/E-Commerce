@@ -1,17 +1,18 @@
 services:
   db-oracle: 
-  image: gvenzl/oracle-free
-  container_name: ecommerce-db
-  ports:
-    - 1521:1521
-  enviroment:
-    - APP_USER=${DB_USER}
-    - APP_PASSWORD=${DB_PASSWORD}
-    - APP_ORACLE_DB=ecommerce_db
-  volumes:
-    - oracle-data:/opt/oracle/oradata
-  restart: unless-stopped
+    image: gvenzl/oracle-free
+    container_name: ecommerce-db
+    ports:
+      - 1521:1521
+    environment:
+      - ORACLE_PASSWORD=${ORACLE_SYSTEM_PASSWORD}
+      - APP_USER=${DB_USER}
+      - APP_USER_PASSWORD=${DB_PASSWORD}
+      - APP_ORACLE_DB=ecommerce_db
+    volumes:
+      - oracle-data:/opt/oracle/oradata
+    restart: unless-stopped
 volumes:
-  oracle-data:
-    name: oracle-sprint-data
+    oracle-data:
+      name: oracle-sprint-data
 

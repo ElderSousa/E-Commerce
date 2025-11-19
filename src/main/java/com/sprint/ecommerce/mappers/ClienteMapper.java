@@ -25,8 +25,8 @@ public interface ClienteMapper {
      * Converte a Entidade Cliente para o DTO de Resposta.
      * O MapStruct é inteligente e entende "cliente.usuario.id" e "cliente.usuario.email".
      */
-    @Mapping(source = "id", target = "idCliente")
-    @Mapping(source = "usuario.id", target = "idUsuario")
+    @Mapping(source = "id", target = "id")
+    @Mapping(source = "usuario.id", target = "usuarioId")
     @Mapping(source = "usuario.email", target = "email")
     ClienteResponse clienteToResponse(Cliente cliente);
 }
