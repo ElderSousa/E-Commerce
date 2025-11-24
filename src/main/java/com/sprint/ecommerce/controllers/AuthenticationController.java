@@ -26,8 +26,8 @@ import jakarta.validation.Valid;
 @RequestMapping("/api/v1/auth")
 public class AuthenticationController {
 
-    private AuthenticationManager authenticationManager;
-    private TokenService tokenService;
+    private final AuthenticationManager authenticationManager;
+    private final TokenService tokenService;
 
     public AuthenticationController(AuthenticationManager authenticationManager, TokenService tokenService){
 

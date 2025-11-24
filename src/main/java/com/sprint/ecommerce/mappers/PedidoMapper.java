@@ -1,10 +1,14 @@
 package com.sprint.ecommerce.mappers;
 
+import com.sprint.ecommerce.dtos.responses.PedidoResponse;
+import com.sprint.ecommerce.models.ItemPedido;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.sprint.ecommerce.dtos.request.PedidoRequestDtos.PedidoCreateRequest;
 import com.sprint.ecommerce.models.Pedido;
+
+import java.util.ArrayList;
 
 @Mapper(componentModel = "spring")
 public interface PedidoMapper {
@@ -21,13 +25,19 @@ public interface PedidoMapper {
     @Mapping(target = "valorTotal", ignore = true)  // Ignorado! O Service vai calcular.
     Pedido requestToPedido(PedidoCreateRequest dto);
 
-    
+
     /**
-     * O mapper de resposta será mais complexo (Dia 3),
-     * pois precisará converter o Set<ItemPedido> (Entidade)
-     * para uma List<ItemResponse> (DTO).
+     * Mapeia o Pedido (Pai).
+     * O MapStruct detecta a lista 'itens' e usa o método 'itemToResponse' automaticamente para cada elemento.
      */
-    // @Mapping(source = "cliente.id", target = "clienteId")
-    // @Mapping(source = "itens", target = "itensResponse") // (Método customizado aqui)
-    // PedidoResponseDTO pedidoToResponse(Pedido pedido);
+    @Mapping(source = "cliente.id", target = "clienteId") // Pega o ID de dentro do objeto Cliente
+    @Mapping(source = "itens", target = "itens") // Explicito para clareza (Set -> List)
+    PedidoResponse pedidoToResponse(Pedido pedido);
+
+    /**
+     * Método auxiliar para mapear UM ItemPedido para o DTO interno ItemPedidoResponse.
+     * O MapStruct usa isso num loop para converter a lista.
+     */
+    @Mapping(source = "produto.nome", target = "nomeProduto") // Navega ItemPedido -> Produto -> Nome
+    PedidoResponse.ItemPedidoResponse itemToResponse(ItemPedido item);
 }

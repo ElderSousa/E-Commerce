@@ -12,6 +12,16 @@ services:
     volumes:
       - oracle-data:/opt/oracle/oradata
     restart: unless-stopped
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: ecommerce-rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    restart: unless-stopped
 volumes:
     oracle-data:
       name: oracle-sprint-data
