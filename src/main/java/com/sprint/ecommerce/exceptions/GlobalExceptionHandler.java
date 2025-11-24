@@ -3,6 +3,7 @@ package com.sprint.ecommerce.exceptions;
 import java.time.LocalDateTime;
 import java.util.stream.Collectors;
 
+import com.sprint.ecommerce.exceptions.dtos.ResourceNotFoundException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -65,5 +66,19 @@ public class GlobalExceptionHandler {
         );
 
         return new ResponseEntity<>(errorResponse, HttpStatus.INTERNAL_SERVER_ERROR);
+    }
+
+    public ResponseEntity<ErrorResponse> handleResourceNotFoundException(ResourceNotFoundException ex){
+
+        var errorResponse = new ErrorResponse(
+                "Recurso não encontrado",
+                HttpStatus.NOT_FOUND.value(),
+                ex.getMessage(),
+                LocalDateTime.now()
+        );
+
+        log.warn("Recurso não encontrado {}", ex.getMessage());
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.NOT_FOUND);
     }
 }
